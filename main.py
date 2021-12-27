@@ -6,11 +6,19 @@ from PyQt5 import QtWidgets
 import os
 from script import Convertor
 
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+
 
 class MainWindow(qtw.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
+        try:
+            
+            os.makedirs(os.path.join(BASE_DIR,"output"))
+
+        except FileExistsError as e:
+            pass
         self.left_array = None
         self.right_array = None
 
@@ -31,15 +39,16 @@ class MainWindow(qtw.QMainWindow):
 
     def generate_unique_csv(self):
 
-        print(self.left_array, self.right_array, self.unique_array)
+        # print(self.left_array, self.right_array, self.unique_array)
 
         if self.right_array is not None and self.left_array is not None:
 
             self.unique_array = self.convertor.filter_array(left_file_array=self.left_array, right_file_array=self.right_array)
 
             try:
+                import time
                 msg = self.convertor.array_to_csv(
-                    np_array=self.unique_array, filename="unique_file_app.csv")
+                    np_array=self.unique_array, filename=os.path.join(BASE_DIR,"output",f"unique_scrubbed_{time.strftime('%Y%m%d-%H%M%S')}.csv"))
                 qtw.QMessageBox.about(self, "Message", msg)
                 
                 self.left_array = None
@@ -56,7 +65,7 @@ class MainWindow(qtw.QMainWindow):
             qtw.QMessageBox.about(
                 self, "Message", "Please Make sure both CSV's are loaded!!")
 
-    def browsefiles(self, title, lineedit, defaultpath='C:\\'):
+    def browsefiles(self, title, lineedit, defaultpath=""):
 
         file = qtw.QFileDialog.getOpenFileName(
             self, title, defaultpath, 'CSV Files (*.csv, *.csv)')
