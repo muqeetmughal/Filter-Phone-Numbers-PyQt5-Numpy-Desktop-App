@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>459</width>
-    <height>397</height>
+    <width>602</width>
+    <height>394</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,8 +27,8 @@
      <rect>
       <x>30</x>
       <y>40</y>
-      <width>421</width>
-      <height>248</height>
+      <width>441</width>
+      <height>261</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -63,18 +63,6 @@
      </item>
      <item>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="6" column="0" colspan="2">
-        <widget class="QPushButton" name="unsortedbutton">
-         <property name="font">
-          <font>
-           <pointsize>13</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>UNSORTED</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <widget class="QLineEdit" name="filepathleft">
          <property name="font">
@@ -99,18 +87,6 @@
          </property>
          <property name="text">
           <string>Browse</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QLabel" name="rightpathlabel">
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Choose File need to be scrubbed from big data file:</string>
          </property>
         </widget>
        </item>
@@ -150,6 +126,30 @@
          </property>
          <property name="text">
           <string>SORTED</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QPushButton" name="unsortedbutton">
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>UNSORTED</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="rightpathlabel">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Choose File need to be scrubbed from big data file:</string>
          </property>
         </widget>
        </item>
@@ -199,7 +199,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>459</width>
+     <width>602</width>
      <height>21</height>
     </rect>
    </property>

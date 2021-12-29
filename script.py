@@ -10,12 +10,12 @@ class Convertor:
     def read_csv_file(self, path, header=None):
 
         try:
-            dataframe = pd.read_csv(path,header=header,dtype=str, low_memory=False)
+            dataframe = pd.read_csv(path,header=header,dtype=object, low_memory=False)
 
 
             np_array = dataframe.to_numpy().flatten()
 
-            np_array = np.array([str(el) for el in np_array.astype(object) if len(str(el)) == 10])
+            np_array = np.array([str(el)[-10:] for el in np_array.astype(object) if len(str(el)) >= 10])
 
             print("Current Read Array is: ",np_array, "with length:", len(np_array))
 
@@ -31,11 +31,11 @@ class Convertor:
 
         print("Array Difference is: ",array_difference)
 
-        unique_array = np.array([el for el in array_difference.astype(object) if len(el) == 10])
+        # unique_array = np.array([el for el in array_difference.astype(object) if len(el) == 10])
 
-        print("Unique Array is: ",unique_array)
+        # print("Unique Array is: ",unique_array)
 
-        return np.unique(unique_array)
+        return np.unique(array_difference)
 
     def array_to_csv(self, np_array, filename,method,header, index=None):
 

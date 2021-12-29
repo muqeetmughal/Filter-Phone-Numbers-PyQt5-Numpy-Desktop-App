@@ -2,10 +2,9 @@ from PyQt5.QtCore import right
 import PyQt5.QtWidgets as qtw
 from PyQt5.uic import loadUi
 import sys
-from PyQt5 import QtWidgets
 import os
 from script import Convertor
-
+from PyQt5 import QtGui
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -23,7 +22,6 @@ class MainWindow(qtw.QMainWindow):
         loadUi("ui/main.ui", self)
 
         self.convertor = Convertor()
-
 
         self.filepathleft.setEnabled(False)
 
@@ -51,16 +49,6 @@ class MainWindow(qtw.QMainWindow):
 
     def generate_unique_csv(self, method):
 
-        # try:
-
-        #     os.makedirs(os.path.join(BASE_DIR,"output"))
-
-        # except FileExistsError as e:
-        #     pass
-
-
-
-        # print(self.left_array, self.right_array, self.unique_array)
 
         if self.right_array is not None and self.left_array is not None:
 
@@ -93,8 +81,6 @@ class MainWindow(qtw.QMainWindow):
         file = qtw.QFileDialog.getOpenFileName(
             self, title, defaultpath, 'CSV Files (*.csv, *.csv)')
         lineedit.setText(file[0])
-
-        # print(lineedit.text())
 
         if "left" in title.lower():
 
@@ -157,6 +143,7 @@ if __name__ == "__main__":
     widget = qtw.QStackedWidget()
 
     widget.setWindowTitle("Leads Filter TMC")
+    widget.setWindowIcon(QtGui.QIcon('tmc.png'))
 
 
     widget.addWidget(mainwindow)
