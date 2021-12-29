@@ -2,7 +2,7 @@ from numpy.lib.arraysetops import unique
 import pandas as pd
 import numpy as np
 import datetime
-from utils import values_for_reshape
+from utils import values_for_reshape_sorted, values_for_reshape, values_for_reshape_unsorted
 
 class Convertor:
 
@@ -10,13 +10,14 @@ class Convertor:
     def read_csv_file(self, path, header=None):
 
         try:
-            dataframe = pd.read_csv(path,header=header)
-
+            dataframe = pd.read_csv(path,header=header,dtype=str, low_memory=False)
 
 
             np_array = dataframe.to_numpy().flatten()
 
-            print("Current Read Array is: ",np_array)
+            np_array = np.array([str(el) for el in np_array.astype(object) if len(str(el)) == 10])
+
+            print("Current Read Array is: ",np_array, "with length:", len(np_array))
 
             return np_array
 
@@ -30,46 +31,39 @@ class Convertor:
 
         print("Array Difference is: ",array_difference)
 
-        unique_array = np.array([el for el in array_difference.astype(str) if len(el) == 10])
+        unique_array = np.array([el for el in array_difference.astype(object) if len(el) == 10])
 
         print("Unique Array is: ",unique_array)
 
         return np.unique(unique_array)
 
-    def array_to_csv(self, np_array, filename,header=None, index=None):
+    def array_to_csv(self, np_array, filename,method,header, index=None):
 
-                
-        out = np.full((values_for_reshape(np_array)), np.nan, dtype='object')
+        if method == "sorted":
+
+            out = np.full((values_for_reshape_sorted(np_array)), np.nan, dtype='object')
+
+        elif method == "unsorted":
+            out = np.full((values_for_reshape_unsorted(np_array)), np.nan, dtype='object')
 
         out.ravel()[:len(np_array)] = np_array
 
 
         try:
             dataframe = pd.DataFrame(out)
+
+            if header:
+                header = ['phone_no' for i in range(dataframe.shape[1])]
+            else:
+                header = None
+            
+            dataframe.dropna(inplace = True)
             dataframe.to_csv(f"{filename}",header=header, index=index)
 
             return "File Saved!"
 
         except Exception as e:
             return str(e)
-
-    def reshape_array(self, array):
-
-        array = np.sort(array)
-
-        if len(array) < 1000000:
-
-            target = array.reshape(len(array)//10,-1)
-
-        elif len(array) > 1000000:
-            # target = array.reshape()
-            pass
-        else:
-
-            target = array
-
-        return target
-
 
 # import pandas as pd
 # import numpy as np

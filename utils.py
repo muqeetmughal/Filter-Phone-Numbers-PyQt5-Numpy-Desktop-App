@@ -28,5 +28,50 @@ def values_for_reshape(array):
         row = int(nearest_perfect_square_of_array_length ** 0.5)
         col = row
         print(row,"X",col)
+        
+        
         return row, col
 
+
+def values_for_reshape_sorted(array):
+
+    array_length = len(array)
+
+
+    nearest_perfect_square_of_array_length = round(math.sqrt(array_length))**2
+
+    print("Nearest PS is :", nearest_perfect_square_of_array_length)
+
+    if array_length >= nearest_perfect_square_of_array_length:
+
+        nearest_perfect_square_of_array_length = (round(math.sqrt(array_length))+1)**2
+
+    print("Nearest PS 2 is :", nearest_perfect_square_of_array_length)
+    
+    col = 5
+    row = nearest_perfect_square_of_array_length//col
+
+    if row > 1000000:
+        col = col + 1
+        row = 1000000
+
+    print(row, col)
+
+    return row, col
+
+
+
+def values_for_reshape_unsorted(array):
+
+    array_length = len(array)
+
+    row = 1000000
+
+    col = array_length//row
+
+    if array_length > (row*col):
+        col = col+1
+
+    print(row, col)
+
+    return row, col

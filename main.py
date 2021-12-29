@@ -13,12 +13,8 @@ class MainWindow(qtw.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        try:
-            
-            os.makedirs(os.path.join(BASE_DIR,"output"))
-
-        except FileExistsError as e:
-            pass
+        
+        
         self.left_array = None
         self.right_array = None
 
@@ -28,16 +24,41 @@ class MainWindow(qtw.QMainWindow):
 
         self.convertor = Convertor()
 
+
+        self.filepathleft.setEnabled(False)
+
+        self.filepathright.setEnabled(False)
+
         self.browseleft.clicked.connect(lambda: self.browsefiles(
             title='Select Left csv file', lineedit=self.filepathleft))
         self.browseright.clicked.connect(lambda: self.browsefiles(
             title='Select Right csv file', lineedit=self.filepathright))
 
-        self.unqiuebutton.clicked.connect(lambda: self.generate_unique_csv())
+        self.sortedbutton.clicked.connect(lambda: self.generate_unique_csv(method="sorted"))
 
-        # self.filterbutton.clicked.connect(lambda : self.filter_two_csv())
+        self.unsortedbutton.clicked.connect(lambda : self.generate_unique_csv(method="unsorted"))
 
-    def generate_unique_csv(self):
+        self.enable_header.stateChanged.connect(self.is_header_enabled)
+
+    def is_header_enabled(self):
+
+        print(self.enable_header.isChecked())
+
+        if self.enable_header.isChecked():
+            self.header = True
+        else:
+            self.header = False
+
+    def generate_unique_csv(self, method):
+
+        # try:
+
+        #     os.makedirs(os.path.join(BASE_DIR,"output"))
+
+        # except FileExistsError as e:
+        #     pass
+
+
 
         # print(self.left_array, self.right_array, self.unique_array)
 
@@ -45,10 +66,12 @@ class MainWindow(qtw.QMainWindow):
 
             self.unique_array = self.convertor.filter_array(left_file_array=self.left_array, right_file_array=self.right_array)
 
+            output_path = str(qtw.QFileDialog.getExistingDirectory(self, "Select Directory"))
             try:
                 import time
-                msg = self.convertor.array_to_csv(
-                    np_array=self.unique_array, filename=os.path.join(BASE_DIR,"output",f"unique_scrubbed_{time.strftime('%Y%m%d-%H%M%S')}.csv"))
+
+                print(output_path)
+                msg = self.convertor.array_to_csv(method=method,header=self.header,np_array=self.unique_array, filename=os.path.join(output_path,f"unique_scrubbed_{time.strftime('%Y%m%d-%H%M%S')}.csv"))
                 qtw.QMessageBox.about(self, "Message", msg)
                 
                 self.left_array = None
@@ -81,30 +104,66 @@ class MainWindow(qtw.QMainWindow):
             self.right_array = self.convertor.read_csv_file(
                 path=lineedit.text())
 
-        # print(self.left_array, self.right_array)
-
-        # if self.left_array is None or self.right_array is None:
-        #     self.uniquebutton.setEnabled(True)
-        # else:
-        #     self.uniquebutton.setEnabled(False)
-
-
-app = qtw.QApplication(sys.argv)
-
-
-mainwindow = MainWindow()
 
 
 
-widget = qtw.QStackedWidget()
+if __name__ == "__main__":
+    
+    app = qtw.QApplication(sys.argv)
 
-widget.setWindowTitle("Leads Filter TMC")
 
-widget.addWidget(mainwindow)
+    mainwindow = MainWindow()
 
-widget.setFixedWidth(700)
-widget.setFixedHeight(150)
+    
+    styleSheet = """
+        
+        
+        QMainWindow {
+            background-color : #0c4c7c;
+            color : white;
+        }
 
-widget.show()
+        QPushButton {
+            border:2px solid black; 
+            background-color : #82a4bc;
+            width : 100%;
+            height : auto;
+        }
+        QLineEdit {
+            height: 100%;
+            width : 100%;
+            color : black;
+            background-color : white;
+            border:2px solid black;
+        }
 
-sys.exit(app.exec_())
+
+        QLabel{
+            color : white;
+        }
+        QCheckBox{
+            color : white;
+        }
+        QMessageBox{
+            background-color : #0c4c7c;
+            color : white;
+        }
+        """
+
+    
+    app.setStyleSheet(styleSheet)
+
+
+    widget = qtw.QStackedWidget()
+
+    widget.setWindowTitle("Leads Filter TMC")
+
+
+    widget.addWidget(mainwindow)
+
+    widget.setFixedWidth(500)
+    widget.setFixedHeight(350)
+
+    widget.show()
+
+    sys.exit(app.exec_())
