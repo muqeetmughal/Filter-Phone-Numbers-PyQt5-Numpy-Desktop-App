@@ -13,7 +13,6 @@ class MainWindow(qtw.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         
-        
         self.left_array = None
         self.right_array = None
 
@@ -38,6 +37,8 @@ class MainWindow(qtw.QMainWindow):
 
         self.enable_header.stateChanged.connect(self.is_header_enabled)
 
+        # self.is_header_enabled()
+
     def is_header_enabled(self):
 
         print(self.enable_header.isChecked())
@@ -48,6 +49,8 @@ class MainWindow(qtw.QMainWindow):
             self.header = False
 
     def generate_unique_csv(self, method):
+
+        self.is_header_enabled()
 
 
         if self.right_array is not None and self.left_array is not None:
@@ -148,7 +151,7 @@ if __name__ == "__main__":
 
     widget.addWidget(mainwindow)
 
-    widget.setFixedWidth(500)
+    widget.setFixedWidth(700)
     widget.setFixedHeight(350)
 
     widget.show()
