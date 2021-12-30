@@ -151,9 +151,9 @@ if __name__ == "__main__":
 
     widget.addWidget(mainwindow)
 
-    widget.setFixedWidth(700)
-    widget.setFixedHeight(350)
-
+    widget.setFixedWidth(500)
+    widget.setFixedHeight(306)
+    # widget.showMaximized()
     widget.show()
 
     sys.exit(app.exec_())
