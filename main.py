@@ -12,7 +12,7 @@ class MainWindow(qtw.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        
+
         self.left_array = None
         self.right_array = None
 
@@ -31,9 +31,11 @@ class MainWindow(qtw.QMainWindow):
         self.browseright.clicked.connect(lambda: self.browsefiles(
             title='Select Right csv file', lineedit=self.filepathright))
 
-        self.sortedbutton.clicked.connect(lambda: self.generate_unique_csv(method="sorted"))
+        self.sortedbutton.clicked.connect(
+            lambda: self.generate_unique_csv(method="sorted"))
 
-        self.unsortedbutton.clicked.connect(lambda : self.generate_unique_csv(method="unsorted"))
+        self.unsortedbutton.clicked.connect(
+            lambda: self.generate_unique_csv(method="unsorted"))
 
         self.enable_header.stateChanged.connect(self.is_header_enabled)
 
@@ -52,19 +54,21 @@ class MainWindow(qtw.QMainWindow):
 
         self.is_header_enabled()
 
-
         if self.right_array is not None and self.left_array is not None:
 
-            self.unique_array = self.convertor.filter_array(left_file_array=self.left_array, right_file_array=self.right_array)
+            self.unique_array = self.convertor.filter_array(
+                left_file_array=self.left_array, right_file_array=self.right_array)
 
-            output_path = str(qtw.QFileDialog.getExistingDirectory(self, "Select Directory"))
+            output_path = str(qtw.QFileDialog.getExistingDirectory(
+                self, "Select Directory"))
             try:
                 import time
 
                 print(output_path)
-                msg = self.convertor.array_to_csv(method=method,header=self.header,np_array=self.unique_array, filename=os.path.join(output_path,f"unique_scrubbed_{time.strftime('%Y%m%d-%H%M%S')}.csv"))
+                msg = self.convertor.array_to_csv(method=method, header=self.header, np_array=self.unique_array, filename=os.path.join(
+                    output_path, f"unique_scrubbed_{time.strftime('%Y%m%d-%H%M%S')}.csv"))
                 qtw.QMessageBox.about(self, "Message", msg)
-                
+
                 self.left_array = None
                 self.right_array = None
                 self.unique_array = []
@@ -94,16 +98,12 @@ class MainWindow(qtw.QMainWindow):
                 path=lineedit.text())
 
 
-
-
 if __name__ == "__main__":
-    
-    app = qtw.QApplication(sys.argv)
 
+    app = qtw.QApplication(sys.argv)
 
     mainwindow = MainWindow()
 
-    
     styleSheet = """
         
         
@@ -139,20 +139,17 @@ if __name__ == "__main__":
         }
         """
 
-    
     app.setStyleSheet(styleSheet)
-
 
     widget = qtw.QStackedWidget()
 
     widget.setWindowTitle("Leads Filter TMC")
     widget.setWindowIcon(QtGui.QIcon('tmc.png'))
 
-
     widget.addWidget(mainwindow)
 
-    widget.setFixedWidth(500)
-    widget.setFixedHeight(306)
+    # widget.setFixedWidth(500)
+    # widget.setFixedHeight(306)
     # widget.showMaximized()
     widget.show()
 
