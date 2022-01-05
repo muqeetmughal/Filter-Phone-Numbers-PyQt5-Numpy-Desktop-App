@@ -14,6 +14,7 @@ class MainWindow(qtw.QMainWindow):
         super(MainWindow, self).__init__()
 
         self.left_array = None
+        
         self.right_array = None
 
         self.unique_array = []
@@ -143,13 +144,13 @@ if __name__ == "__main__":
 
     widget = qtw.QStackedWidget()
 
-    widget.setWindowTitle("Leads Filter TMC")
-    widget.setWindowIcon(QtGui.QIcon('tmc.png'))
+    widget.setWindowTitle("Best Data Deals Scrubbing Tool")
+    widget.setWindowIcon(QtGui.QIcon('logo.png'))
 
     widget.addWidget(mainwindow)
 
-    # widget.setFixedWidth(500)
-    # widget.setFixedHeight(306)
+    # widget.setFixedWidth(1920)
+    # widget.setFixedHeight(1080)
     # widget.showMaximized()
     widget.show()
 
