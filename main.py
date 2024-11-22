@@ -19,7 +19,7 @@ class MainWindow(qtw.QMainWindow):
 
         self.unique_array = []
 
-        loadUi("ui/main.ui", self)
+        loadUi(os.path.join(BASE_DIR,"ui/main.ui"), self)
 
         self.convertor = Convertor()
 
@@ -87,7 +87,7 @@ class MainWindow(qtw.QMainWindow):
     def browsefiles(self, title, lineedit, defaultpath=""):
 
         file = qtw.QFileDialog.getOpenFileName(
-            self, title, defaultpath, 'CSV Files (*.csv, *.csv)')
+            self, title, defaultpath, 'CSV Files (*.csv, *.csv, *.txt)')
         lineedit.setText(file[0])
 
         if "left" in title.lower():
