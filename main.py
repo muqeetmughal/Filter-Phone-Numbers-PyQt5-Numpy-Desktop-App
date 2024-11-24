@@ -87,7 +87,7 @@ class MainWindow(qtw.QMainWindow):
     def browsefiles(self, title, lineedit, defaultpath=""):
 
         file = qtw.QFileDialog.getOpenFileName(
-            self, title, defaultpath, 'CSV Files (*.csv, *.csv, *.txt)')
+            self, title, defaultpath, 'CSV Files (*.csv *.txt)')
         lineedit.setText(file[0])
 
         if "left" in title.lower():
