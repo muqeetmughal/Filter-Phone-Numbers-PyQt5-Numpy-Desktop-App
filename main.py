@@ -19,7 +19,7 @@ class MainWindow(qtw.QMainWindow):
 
         self.unique_array = []
 
-        loadUi(os.path.join(BASE_DIR,"ui/main.ui"), self)
+        loadUi("ui/main.ui", self)
 
         self.convertor = Convertor()
 
